@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir -p bin
           javac -d bin -cp .:libs/junit-4.12.jar src/main/java/com/yagicamp/*.java
-          javac -d bin -cp .:bin:libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar test/java/com/yagicamp/*.java
+          javac -d bin -cp .:bin:libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar src/test/java/com/yagicamp/*.java
 
       # Step 4: Run the JUnit tests
       - name: Run JUnit Tests
