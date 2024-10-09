@@ -21,21 +21,24 @@ jobs:
         with:
           java-version: '11'
 
-      # Step 3: Compile the Java code
-      - name: Compile Java Code
+      # Step 3: Install Gradle
+      - name: Install Gradle
         run: |
-          mkdir -p bin
-          javac -d bin -cp .:libs/junit-4.12.jar src/main/java/com/yagicamp/*.java
-          javac -d bin -cp .:bin:libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar src/test/java/com/yagicamp/*.java
+          sudo apt-get install gradle
 
-      # Step 4: Run the JUnit tests
+      # Step 4: Build the project using Gradle
+      - name: Build the project
+        run: |
+          ./gradlew build
+
+      # Step 5: Run the tests using Gradle
       - name: Run JUnit Tests
         run: |
-          java -cp .:bin:libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar org.junit.runner.JUnitCore com.yagicamp.CalculatorTest
+          ./gradlew test
 
-      # Step 5: Collect test results (optional)
+      # Step 6: Collect test results (optional)
       - name: Archive test results
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: bin/test-results
+          path: build/test-results/test
